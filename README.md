@@ -57,4 +57,4 @@ Don't forget the "." at the end. data-analyst-notebook is the name of the image 
 
 ## START SERVER
 For mac and Ubuntu:  
-After the installation, You simply run run_docker.sh . In browser, you can go [localhost:8888](http://localhost:8888) to access the Jupyter notebook.
+After the installation, You simply run run_docker.sh . In browser, you can go to [localhost:8888](http://localhost:8888) to access the Jupyter notebook.
