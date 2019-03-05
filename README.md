@@ -14,7 +14,7 @@ I am usually run Jupyter Notebook or Hydrogen in my MacBook Pro. However, someti
 
 **Version 0.1**    
 *3-5-2019*  
-My docker image based on Ubuntu. It supports Python 3 and R kernel in Jupyter Notebook. With the help of R Magic,  I can run both Python and R in the same .ipynb file.  To learn more about R Magic, you can click [here](www.sina.com https://www.datacamp.com/community/blog/jupyter-notebook-r?utm_source=adwords_ppc&utm_campaignid=1565261270&utm_adgroupid=67750485268&utm_device=c&utm_keyword=&utm_matchtype=b&utm_network=g&utm_adpostion=1t1&utm_creative=295208661496&utm_targetid=dsa-473406574235&utm_loc_interest_ms=&utm_loc_physical_ms=9033309&gclid=EAIaIQobChMIt5Xy39jq4AIVbiCtBh3FdQ4IEAAYASAAEgLEZ_D_BwE).
+My docker image based on Ubuntu. It supports Python 3 and R kernel in Jupyter Notebook. With the help of R Magic,  I can run both Python and R in the same .ipynb file.  To learn more about R Magic, you can click [here](https://www.datacamp.com/community/blog/jupyter-notebook-r?utm_source=adwords_ppc&utm_campaignid=1565261270&utm_adgroupid=67750485268&utm_device=c&utm_keyword=&utm_matchtype=b&utm_network=g&utm_adpostion=1t1&utm_creative=295208661496&utm_targetid=dsa-473406574235&utm_loc_interest_ms=&utm_loc_physical_ms=9033309&gclid=EAIaIQobChMIt5Xy39jq4AIVbiCtBh3FdQ4IEAAYASAAEgLEZ_D_BwE).
 I also installed Nbextensions for Jupyter Notebook.  For more information, you can click [here](https://github.com/ipython-contrib/jupyter_contrib_nbextensions)
 
 
