@@ -1,61 +1,97 @@
 
 # Distributed under the terms of the GNU General Public License v3.0
-FROM ubuntu
+
+FROM jupyter/scipy-notebook
 LABEL maintainer="Data Analyst Notebook <l.johnny@outlook.com>"
-ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
-# Setup Timezone
-ENV TZ=America/Los_Angeles
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-RUN apt-get update && yes|apt-get upgrade
-
-#Install necessary tools
-RUN apt-get install -y wget bzip2 git unzip tree
-RUN apt-get clean
-RUN wget https://repo.continuum.io/archive/Anaconda3-2018.12-Linux-x86_64.sh
-RUN bash Anaconda3-2018.12-Linux-x86_64.sh -b
-RUN rm Anaconda3-2018.12-Linux-x86_64.sh
-
-# Setup path
-ENV PATH /root/anaconda3/bin:$PATH
-
-# Install packages
-RUN conda update conda
-RUN conda update anaconda
-RUN conda update --all
-RUN conda install --yes numpy scipy pandas matplotlib seaborn tqdm autopep8
-RUN conda install -c conda-forge lightgbm
-RUN pip install lighteda
 
 
+# Install Tensorflow
+RUN conda install --quiet --yes \
+    'tensorflow=1.13*' \
+    'keras=2.2*' && \
+# Add package that I usually use
+    conda install --yes numpy scipy pandas matplotlib seaborn tqdm autopep8 && \
+    conda install -c conda-forge lightgbm && \
+    #conda install -c conda-forge fbprophet  && \
+    conda install -c pytorch pytorch && \
+    conda install -c conda-forge xgboost && \
+    conda install graphviz && \
+    conda install pydot && \
+    conda install -c conda-forge tqdm && \
+    conda install -c conda-forge pipreqs && \
+    conda install -c conda-forge jupytext && \
+    conda install -c conda-forge jupyter_contrib_nbextensions && \
+    pip install lighteda && \
+    conda clean -tipsy && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
 
 
-# Configuring access to Jupyter
-RUN mkdir workspace
-ENV HOME=/workspace
-ENV SHELL=/bin/bash
-VOLUME /workspace
-WORKDIR /workspace
+USER root
 
-COPY run_jupyter.sh /opt/run_jupyter.sh
-RUN chmod +x /opt/run_jupyter.sh
-COPY password.txt /opt/password.txt
-RUN chmod +x /opt/password.txt
-
-#install R
-RUN apt-get install -y libopenblas-base r-base
-RUN R -e 'install.packages(c("repr", "IRdisplay", "evaluate", "crayon", "pbdZMQ", "devtools", "uuid", "digest", "IRkernel"))'
-RUN R -e 'IRkernel::installspec()'
-
-#install Nbextensions
-RUN pip install jupyter_contrib_nbextensions
-RUN pip install https://github.com/ipython-contrib/jupyter_contrib_nbextensions/tarball/master
-RUN jupyter contrib nbextension install --user
-RUN pip install jupyter_nbextensions_configurator
-RUN jupyter nbextensions_configurator enable --user
+# R pre-requisites
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    fonts-dejavu \
+    python-pydot \
+    python-pydot-ng \
+    graphviz \
+    gfortran \
+    gcc && \
+    rm -rf /var/lib/apt/lists/*
 
 
-# Jupyter listens port: 8888
-EXPOSE 8888
-# Run Jupytewr notebook as Docker main process
-CMD ["/opt/run_jupyter.sh"]
+USER $NB_UID
+
+
+
+
+# R packages including IRKernel which gets installed globally.
+RUN conda install --quiet --yes \
+    'rpy2=2.9*' \
+    'r-base=3.5.1' \
+    'r-irkernel=0.8*' \
+    'r-plyr=1.8*' \
+    'r-devtools=1.13*' \
+    'r-tidyverse=1.2*' \
+    'r-shiny=1.2*' \
+    'r-rmarkdown=1.11*' \
+    'r-forecast=8.2*' \
+    'r-rsqlite=2.1*' \
+    'r-reshape2=1.4*' \
+    'r-nycflights13=1.0*' \
+    'r-caret=6.0*' \
+    'r-rcurl=1.95*' \
+    'r-crayon=1.3*' \
+    'r-randomforest=4.6*' \
+    'r-htmltools=0.3*' \
+    'r-sparklyr=0.9*' \
+    'r-htmlwidgets=1.2*' \
+    'r-hexbin=1.27*' && \
+    conda clean -tipsy && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+
+# Add Jupyter Lab extensions
+RUN jupyter labextension install @jupyterlab/toc
+RUN jupyter labextension install @krassowski/jupyterlab_go_to_definition
+RUN jupyter labextension install @ryantam626/jupyterlab_code_formatter
+RUN jupyter labextension install @jupyterlab/github
+RUN jupyter labextension install jupyterlab_nbmetadata
+RUN jupyter labextension install @jupyterlab/google-drive
+
+# Active the note icon for jupytext
+RUN echo 'c.NotebookApp.contents_manager_class = "jupytext.TextFileContentsManager"' >> .jupyter/jupyter_notebook_config.py
+
+# Active nbextension
+RUN jupyter nbextension enable code_prettify/autopep8
+RUN jupyter nbextension enable gist_it/main
+RUN jupyter nbextension enable highlighter/highlighter
+RUN jupyter nbextension enable keyboard_shortcut_editor/main
+RUN jupyter nbextension enable scratchpad/main
+RUN jupyter nbextension enable select_keymap/main
+RUN jupyter nbextension enable snippets_menu/main
+RUN jupyter nbextension enable spellchecker/main
+RUN jupyter nbextension enable toc2/main
+RUN jupyter nbextension enable table_beautifier/main
+RUN jupyter nbextension enable varInspector/main

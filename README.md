@@ -2,15 +2,37 @@
 >This is my Dockerfile for the Docker image of Data Analyst Notebook
 
 ## INTRO
-I am usually run Jupyter Notebook or Hydrogen in my MacBook Pro. However, sometimes, for a more massive dataset or complex model, I need to use my more powerful desktop or Cloud Service. However, setting up the environment and installing tools and package can be time-consuming, no need to mention the compatibility problems. Luckily, we have Docker! It "containerized" the working environment. For different machines, you can have an identical container. Therefore, you have the same working environment setup, same package, same settings, and same software versions.  If you update one container, you can take a snapshot, push it to the repository, and update the modification to other machines. For more information, you can click [here](https://www.docker.com/why-docker).
+I am usually run Jupyter Notebook or Hydrogen in my MacBook Pro. However, sometimes, for a massive dataset or complex model, I need to use my more powerful desktop or Cloud Service. But setting up the environment and installing tools and packages can be time-consuming, and no need to mention the compatibility problems. Luckily, we have Docker! It “containerized” the working environment. For different machines, you can have identical containers. Therefore, you have the same working environment setup, same package, same settings, and same software versions. If you update one container, you can take a snapshot, push it to the repository, and update the modification to other machines. For more information, you can click [here](https://www.docker.com/why-docker).
 
 
-## MY DOCKER IMAGE  
+## MY DOCKER IMAGE
+
 **Version 0.2**  
+Inspired from [Jupyter Docker Stacks](https://github.com/jupyter/docker-stacks), I update following things:
 
-- [ ] FIX windows port problems
-- [ ] ADD integrating Jupyter Lab
-- [ ] ADD Better user management
+- I switch Base Container to jupyter/scipy-notebook
+- I installed few package:
+  - lightgbm
+  - pytorch
+  - xgboost
+  - graphviz
+  - pydot
+  - jupytext
+  - lighteda
+
+- Also I enabled some my favorite extensions:
+  - code_prettify/autopep8
+  - gist_it/main
+  - highlighter/highlighter
+  - keyboard_shortcut_editor/main
+  - scratchpad/main
+  - select_keymap/main
+  - snippets_menu/main
+  - spellchecker/main
+  - toc2/main
+  - table_beautifier/main
+  - varInspector/main
+
 
 **Version 0.1**    
 *3-5-2019*  
@@ -18,32 +40,11 @@ My docker image based on Ubuntu. It supports Python 3 and R kernel in Jupyter No
 I also installed Nbextensions for Jupyter Notebook.  For more information, you can click [here](https://github.com/ipython-contrib/jupyter_contrib_nbextensions)
 
 
-
 ## INSTALL
 
 ### Install Docker
 The Docker community have an explicit tutorial about how to install Docker. Please check [here](https://www.docker.com/community-edition#/download)
 
-
-
-
-
-### SETUP PASSWORD
-
-Download or clone my repository.
-
-Before build image, you need to generate a password, to secure the notebook. The following Python code can generate hashed password.
-
-```python
-In [1]: from notebook.auth import passwd
-In [2]: passwd()
-Enter password:
-Verify password:
-Out[2]: 'sha1:67c9e60bb8b6:9ffede0825894254b2e042ea597d771089e11aed'
-```
-For more information, please check [here](https://jupyter-notebook.readthedocs.io/en/stable/public_server.html).
-
-After you generate the hashed password, you need copy the string (witout apostrophe ' ' ) into password.txt .
 
 
 ### BUILD ONE BASED ON DOCKERFILE
