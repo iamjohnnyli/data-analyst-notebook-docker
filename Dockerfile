@@ -1,10 +1,14 @@
 
-# Distributed under the terms of the GNU General Public License v3.0
+# Distributed under the terms of the BSD License
+# The Dockerfile is Inspired by Jupyter Docker Stacks(https://github.com/jupyter/docker-stacks)
+# Inspect the Dockerfile at:
+# https://github.com/j84lee/data-analyst-notebook-docker
+
 
 FROM jupyter/scipy-notebook
 LABEL maintainer="Data Analyst Notebook <l.johnny@outlook.com>"
 
-
+RUN conda install python=3.7 anaconda=custom
 # Install Tensorflow
 RUN conda install --quiet --yes \
     'tensorflow=1.13*' \
@@ -12,11 +16,15 @@ RUN conda install --quiet --yes \
 # Add package that I usually use
     conda install --yes numpy scipy pandas matplotlib seaborn tqdm autopep8 && \
     conda install -c conda-forge lightgbm && \
-    #conda install -c conda-forge fbprophet  && \
+    pip install pystan && \
+    pip install fbprophet && \
     conda install -c pytorch pytorch && \
     conda install -c conda-forge xgboost && \
     conda install graphviz && \
     conda install pydot && \
+    conda install -c anaconda nltk && \
+    conda install -c conda-forge textblob && \
+    conda install -c conda-forge spacy && \
     conda install -c conda-forge tqdm && \
     conda install -c conda-forge pipreqs && \
     conda install -c conda-forge jupytext && \
@@ -75,7 +83,15 @@ RUN conda install --quiet --yes \
 # Add Jupyter Lab extensions
 RUN jupyter labextension install @jupyterlab/toc
 RUN jupyter labextension install @krassowski/jupyterlab_go_to_definition
+
 RUN jupyter labextension install @ryantam626/jupyterlab_code_formatter
+RUN pip install jupyterlab_code_formatter
+RUN jupyter serverextension enable --py jupyterlab_code_formatter
+
+RUN jupyter labextension install @jupyterlab/git
+RUN pip install jupyterlab-git
+RUN jupyter serverextension enable --py jupyterlab_git
+
 RUN jupyter labextension install @jupyterlab/github
 RUN jupyter labextension install jupyterlab_nbmetadata
 RUN jupyter labextension install @jupyterlab/google-drive
@@ -95,3 +111,7 @@ RUN jupyter nbextension enable spellchecker/main
 RUN jupyter nbextension enable toc2/main
 RUN jupyter nbextension enable table_beautifier/main
 RUN jupyter nbextension enable varInspector/main
+
+# Download corpora and language model for NLP packages.
+RUN python -m textblob.download_corpora
+RUN python -m spacy download en_core_web_sm

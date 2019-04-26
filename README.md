@@ -2,23 +2,42 @@
 >This is my Dockerfile for the Docker image of Data Analyst Notebook
 
 ## INTRO
+
+**Apr 26 2019 Update**
+
+The another reason I use docker is to have a consistent environment for research. By using the same docker image, any people at any time can repeat the experiment in same environment.   
+
+
+**Mar 5 2019**
+
 I am usually run Jupyter Notebook or Hydrogen in my MacBook Pro. However, sometimes, for a massive dataset or complex model, I need to use my more powerful desktop or Cloud Service. But setting up the environment and installing tools and packages can be time-consuming, and no need to mention the compatibility problems. Luckily, we have Docker! It “containerized” the working environment. For different machines, you can have identical containers. Therefore, you have the same working environment setup, same package, same settings, and same software versions. If you update one container, you can take a snapshot, push it to the repository, and update the modification to other machines. For more information, you can click [here](https://www.docker.com/why-docker).
 
 
 ## MY DOCKER IMAGE
 
+***Version 0.3***
+TODO:
+- [ ] Find a easy method to pre-seed credentials settings so the Google Drive extension works out-of-the-box on start-up
+- [ ] Build a GPU versions Docker
+
+
 **Version 0.2**  
 Inspired from [Jupyter Docker Stacks](https://github.com/jupyter/docker-stacks), I update following things:
 
 - I switch Base Container to jupyter/scipy-notebook
-- I installed few package:
-  - lightgbm
+- I installed few packages:
+  - keras 2.2
+  - tensorflow 1.13
   - pytorch
   - xgboost
+  - lightgbm
   - graphviz
   - pydot
   - jupytext
   - lighteda
+  - ntlk
+  - textblob
+  - spacy
 
 - Also I enabled some my favorite extensions:
   - code_prettify/autopep8
@@ -57,5 +76,8 @@ docker build -t data-analyst-notebook .
 Don't forget the "." at the end. data-analyst-notebook is the name of the image you build.
 
 ## START SERVER
-For mac and Ubuntu:  
-After the installation, You simply run run_docker.sh . In browser, you can go to [localhost:8888](http://localhost:8888) to access the Jupyter notebook.
+I use following code to start server:
+```zsh
+docker run --rm -p 8888:8888 -e JUPYTER_ENABLE_LAB=yes -v ~/:/home/jovyan/work data-analyst-notebook
+```
+There is more detailed instruction from [User Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/)
