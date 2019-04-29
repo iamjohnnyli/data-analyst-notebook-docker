@@ -3,23 +3,23 @@
 
 ## INTRO
 
-**Apr 26 2019 Update**
+**Apr 26, 2019 Update**
 
- The another reason I use docker is to have a consistent environment for research. By using the same docker image, any people at any time can repeat the experiment in same environment.   
+ Another reason I use docker is to have a consistent environment for research. By using the same docker image, any people at any time can repeat the experiment in the same environment.   
 
 
-**Mar 5 2019**
+**Mar 5, 2019**
 
-I am usually run Jupyter Notebook or Hydrogen in my MacBook Pro. However, sometimes, for a massive dataset or complex model, I need to use my more powerful desktop or Cloud Service. But setting up the environment and installing tools and packages can be time-consuming, and no need to mention the compatibility problems. Luckily, we have Docker! It “containerized” the working environment. For different machines, you can have identical containers. Therefore, you have the same working environment setup, same package, same settings, and same software versions. If you update one container, you can take a snapshot, push it to the repository, and update the modification to other machines. For more information, you can click [here](https://www.docker.com/why-docker).
+I am usually run Jupyter Notebook or Hydrogen in my MacBook Pro. However, sometimes, for a massive dataset or complex model, I need to use my more powerful desktop or Cloud Service. However, setting up the environment and installing tools and packages can be time-consuming, and no need to mention the compatibility problems. Luckily, we have Docker! It “containerized” the working environment. For different machines, you can have identical containers. Therefore, you have the same working environment setup, same package, same settings, and same software versions. If you update one container, you can take a snapshot, push it to the repository, and update the modification to other machines. For more information, you can click [here](https://www.docker.com/why-docker).
 
 
 ## MY DOCKERFILE
 
-A Dockerfile basically "tells" docker the way a image build. You can edit it to fit to your daily usages.
+A Dockerfile basically "tells" docker the way an image build. You can edit it to fit your daily usages.
 
 ***Version 0.3***
 TODO:
-- [ ] Find a easy method to pre-seed credentials settings so the Google Drive extension works out-of-the-box on start-up
+- [ ] Find an easy method to pre-seed credentials settings, so the Google Drive extension works out-of-the-box on start-up
 - [ ] Build a GPU versions Docker
 
 
@@ -70,11 +70,11 @@ The Docker community have an explicit tutorial about how to install Docker. Plea
 
 ### BUILD ONE BASED ON DOCKERFILE
 
-In terminal, direct to the folder that contains the dockerfile and run the following command:
+In the terminal, direct to the folder that contains the dockerfile and run the following command:
 ```sh
 docker build -t data-analyst-notebook .
 ```
-Don't forget the "." at the end. data-analyst-notebook is the name of the image. You can change to what ever you prefer.
+Don't forget the "." at the end. data-analyst-notebook is the name of the image. You can change to whatever you prefer.
 
 ## START SERVER
 I use following code to start server:
@@ -83,8 +83,8 @@ docker run --rm -p 8888:8888 -e JUPYTER_ENABLE_LAB=yes -v ~/:/home/jovyan/work d
 ```
 There is more detailed instruction from [User Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/)
 
-If you feel like that the command is too long to run. You can add alias to to your .bashrc file like this:
+If you feel like that the command is too long to run. You can add an alias to your .bashrc file like this:
 ```sh
 alias dslab='docker run -p 8888:8888 -e JUPYTER_ENABLE_LAB=yes -v ~/:/home/jovyan/work data-analyst-notebook'
 ```
-Now you can use ```dslab``` as a replacement for typing the long command.
+Now you can use ```dslab``` in the terminal as a replacement for typing the long command.
