@@ -5,7 +5,7 @@
 
 **Apr 26 2019 Update**
 
-The another reason I use docker is to have a consistent environment for research. By using the same docker image, any people at any time can repeat the experiment in same environment.   
+ The another reason I use docker is to have a consistent environment for research. By using the same docker image, any people at any time can repeat the experiment in same environment.   
 
 
 **Mar 5 2019**
@@ -13,7 +13,9 @@ The another reason I use docker is to have a consistent environment for research
 I am usually run Jupyter Notebook or Hydrogen in my MacBook Pro. However, sometimes, for a massive dataset or complex model, I need to use my more powerful desktop or Cloud Service. But setting up the environment and installing tools and packages can be time-consuming, and no need to mention the compatibility problems. Luckily, we have Docker! It “containerized” the working environment. For different machines, you can have identical containers. Therefore, you have the same working environment setup, same package, same settings, and same software versions. If you update one container, you can take a snapshot, push it to the repository, and update the modification to other machines. For more information, you can click [here](https://www.docker.com/why-docker).
 
 
-## MY DOCKER IMAGE
+## MY DOCKERFILE
+
+A Dockerfile basically "tells" docker the way a image build. You can edit it to fit to your daily usages.
 
 ***Version 0.3***
 TODO:
@@ -59,25 +61,30 @@ My docker image based on Ubuntu. It supports Python 3 and R kernel in Jupyter No
 I also installed Nbextensions for Jupyter Notebook.  For more information, you can click [here](https://github.com/ipython-contrib/jupyter_contrib_nbextensions)
 
 
-## INSTALL
+## Build YOUR OWN DOCKER IMAGE
+
 
 ### Install Docker
 The Docker community have an explicit tutorial about how to install Docker. Please check [here](https://www.docker.com/community-edition#/download)
 
 
-
 ### BUILD ONE BASED ON DOCKERFILE
-A Dockerfile basically "tells" docker the way a image build. You can edit it to fit to your daily usages.
 
 In terminal, direct to the folder that contains the dockerfile and run the following command:
-```bash
+```sh
 docker build -t data-analyst-notebook .
 ```
-Don't forget the "." at the end. data-analyst-notebook is the name of the image you build.
+Don't forget the "." at the end. data-analyst-notebook is the name of the image. You can change to what ever you prefer.
 
 ## START SERVER
 I use following code to start server:
-```zsh
+```sh
 docker run --rm -p 8888:8888 -e JUPYTER_ENABLE_LAB=yes -v ~/:/home/jovyan/work data-analyst-notebook
 ```
 There is more detailed instruction from [User Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/)
+
+If you feel like that the command is too long to run. You can add alias to to your .bashrc file like this:
+```sh
+alias dslab='docker run -p 8888:8888 -e JUPYTER_ENABLE_LAB=yes -v ~/:/home/jovyan/work data-analyst-notebook'
+```
+Now you can use ```dslab``` as a replacement for typing the long command.
