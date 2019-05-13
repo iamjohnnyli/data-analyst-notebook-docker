@@ -20,7 +20,7 @@ A Dockerfile basically "tells" docker the way an image build. You can edit it to
 ***Version 0.3***
 TODO:
 - [ ] Find an easy method to pre-seed credentials settings, so the Google Drive extension works out-of-the-box on start-up
-- [ ] Build a GPU versions Docker
+- [ ] Build a GPU version Docker
 
 
 **Version 0.2**  
