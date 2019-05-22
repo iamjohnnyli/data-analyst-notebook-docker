@@ -1,4 +1,4 @@
-
+# Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the BSD License
 # The Dockerfile is Inspired by Jupyter Docker Stacks(https://github.com/jupyter/docker-stacks)
 # Inspect the Dockerfile at:
