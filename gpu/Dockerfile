@@ -18,7 +18,7 @@ RUN conda install --quiet --yes \
     conda install -c conda-forge lightgbm && \
     pip install pystan && \
     pip install fbprophet && \
-    conda install -c pytorch pytorch && \
+    conda install -c pytorch torchvision cudatoolkit=10.0 -c pytorch && \
     conda install -c conda-forge xgboost && \
     conda install graphviz && \
     conda install pydot && \
@@ -26,7 +26,7 @@ RUN conda install --quiet --yes \
     conda install -c conda-forge textblob && \
     conda install -c conda-forge spacy && \
     conda install -c conda-forge tqdm && \
-    conda install -c plotly && \
+    conda install -c plotly plotly  && \
     conda install -c conda-forge pipreqs && \
     conda install -c conda-forge jupytext && \
     conda install -c conda-forge jupyter_contrib_nbextensions && \

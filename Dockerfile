@@ -26,7 +26,7 @@ RUN conda install --quiet --yes \
     conda install -c conda-forge textblob && \
     conda install -c conda-forge spacy && \
     conda install -c conda-forge tqdm && \
-    conda install -c plotly && \
+    conda install -c plotly plotly && \
     conda install -c conda-forge pipreqs && \
     conda install -c conda-forge jupytext && \
     conda install -c conda-forge jupyter_contrib_nbextensions && \
