@@ -5,7 +5,7 @@
 # https://github.com/j84lee/data-analyst-notebook-docker
 
 
-FROM jolibrain/scipy-notebook-gpu
+FROM iamjohnnyli/dsnb-gpu-scipy
 LABEL maintainer="Data Analyst Notebook <l.johnny@outlook.com>"
 
 RUN conda install python=3.7 anaconda=custom
@@ -26,6 +26,7 @@ RUN conda install --quiet --yes \
     conda install -c conda-forge textblob && \
     conda install -c conda-forge spacy && \
     conda install -c conda-forge tqdm && \
+    conda install -c plotly && \
     conda install -c conda-forge pipreqs && \
     conda install -c conda-forge jupytext && \
     conda install -c conda-forge jupyter_contrib_nbextensions && \
