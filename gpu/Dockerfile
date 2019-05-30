@@ -10,9 +10,7 @@ LABEL maintainer="Data Analyst Notebook <l.johnny@outlook.com>"
 
 RUN conda install python=3.7 anaconda=custom
 # Install Tensorflow
-RUN conda install --quiet --yes \
-    'tensorflow-gpu=1.13*' \
-    'keras-gpu=2.2*' && \
+RUN conda install --quiet --yes tensorflow-gpu keras-gpu && \
 # Add package that I usually use
     conda install --yes numpy scipy pandas matplotlib seaborn tqdm autopep8 && \
     conda install -c conda-forge lightgbm && \
@@ -34,6 +32,32 @@ RUN conda install --quiet --yes \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
+
+# #install LightGMB GPU version
+#
+# USER root
+# RUN apt-get update -y && \
+#     apt-get update && \
+#     apt remove --purge --auto-remove cmake
+#     ADD https://cmake.org/files/v3.14/cmake-3.14.4-Linux-x86_64.sh /cmake-3.14.4-Linux-x86_64.sh
+#     RUN mkdir /opt/cmake && \
+#         sh /cmake-3.14.4-Linux-x86_64.sh --prefix=/opt/cmake --skip-license && \
+#         ln -s /opt/cmake/bin/cmake /usr/local/bin/cmake && \
+#         apt install -y ocl-icd-* opencl-headers && \
+#         apt-get install -y libboost-all-dev && \
+#         cmake --version && \
+#         gcc --version
+#
+# RUN git clone --recursive https://github.com/Microsoft/LightGBM.git && \
+#     cd LightGBM/python-package && \
+#     python setup.py install --gpu && \
+#     cd .. && \
+#     cd .. && \
+#     rm -rf LightGBM
+# USER $NB_UID
+#
+# RUN fix-permissions $CONDA_DIR && \
+#     fix-permissions /home/$NB_USER
 
 
 USER root
@@ -81,6 +105,18 @@ RUN conda install --quiet --yes \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
+
+
+# # Add C language Kernel
+# USER root
+#
+# RUN pip install jupyter-c-kernel
+# RUN install_c_kernel
+#
+# USER $NB_UID
+# RUN fix-permissions $CONDA_DIR && \
+#     fix-permissions /home/$NB_USER
+
 
 # Add Jupyter Lab extensions
 RUN jupyter labextension install @jupyterlab/toc
