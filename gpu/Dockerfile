@@ -10,7 +10,8 @@ LABEL maintainer="Data Analyst Notebook <l.johnny@outlook.com>"
 
 RUN conda install python=3.7 anaconda=custom
 # Install Tensorflow
-RUN conda install --quiet --yes tensorflow-gpu keras-gpu && \
+RUN pip install -y tensorflow-gpu==1.14.0rc0 && \
+    conda install --quiet --yes keras-gpu && \
 # Add package that I usually use
     conda install --yes numpy scipy pandas matplotlib seaborn tqdm autopep8 && \
     conda install -c conda-forge lightgbm && \
